@@ -87,7 +87,53 @@
     font-size: 13px;
     color: var(--gray);
     margin-bottom: 6px;
-    display: block;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+
+  label svg { width: 14px; height: 14px; flex-shrink: 0; }
+  label.email-label svg { fill: var(--teal); }
+  label.whatsapp-label svg { fill: #25D366; }
+
+  .field { position: relative; }
+
+  .field .input-icon {
+    position: absolute;
+    left: 14px;
+    top: 42px;
+    width: 16px;
+    height: 16px;
+    pointer-events: none;
+  }
+  .field .input-icon svg { width: 100%; height: 100%; }
+  .field.email-field .input-icon svg { fill: var(--teal); }
+  .field.whatsapp-field .input-icon svg { fill: #25D366; }
+  .field.email-field input,
+  .field.whatsapp-field input {
+    padding-left: 40px;
+  }
+
+  .checkbox-row {
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+    margin-top: -4px;
+  }
+  .checkbox-row input[type="checkbox"] {
+    width: 18px;
+    height: 18px;
+    margin-top: 1px;
+    accent-color: var(--teal);
+    flex-shrink: 0;
+    cursor: pointer;
+  }
+  .checkbox-label {
+    font-size: 13px;
+    color: var(--gray);
+    margin: 0;
+    cursor: pointer;
+    line-height: 1.4;
   }
 
   .field input,
@@ -188,14 +234,33 @@
           <input type="text" id="full_name" name="full_name" placeholder="Jane Doe" required />
         </div>
 
-        <div class="field">
-          <label for="email">Email</label>
+        <div class="field email-field">
+          <label for="email" class="email-label">
+            <svg viewBox="0 0 24 24"><path d="M20 4H4a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V6a2 2 0 0 0-2-2zm0 2v.01L12 12 4 6.01V6h16zM4 18V8.24l8 6 8-6V18H4z"/></svg>
+            Email
+          </label>
+          <span class="input-icon"><svg viewBox="0 0 24 24"><path d="M20 4H4a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V6a2 2 0 0 0-2-2zm0 2v.01L12 12 4 6.01V6h16zM4 18V8.24l8 6 8-6V18H4z"/></svg></span>
           <input type="email" id="email" name="email" placeholder="jane@example.com" required />
         </div>
 
-        <div class="field">
-          <label for="phone">Phone number</label>
-          <input type="tel" id="phone" name="phone" placeholder="+91 98765 43210" />
+        <div class="field whatsapp-field">
+          <label for="phone" class="whatsapp-label">
+            <svg viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.149-.15.298-.347.446-.52.15-.174.198-.3.298-.5.099-.198.05-.371-.05-.52-.099-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.06 3.147 4.995 4.29 2.936 1.142 2.936.762 3.464.71.528-.05 1.706-.698 1.955-1.372.248-.674.248-1.253.173-1.372-.074-.12-.272-.198-.57-.347z"/><path d="M12.004 2c-5.514 0-9.98 4.465-9.98 9.98 0 1.955.564 3.783 1.541 5.32L2 22l4.828-1.523a9.933 9.933 0 0 0 5.176 1.436c5.514 0 9.98-4.465 9.98-9.98C21.984 6.465 17.52 2 12.004 2zm0 18.183a8.16 8.16 0 0 1-4.223-1.174l-.303-.18-2.865.903.912-2.834-.198-.29a8.15 8.15 0 0 1-1.256-4.428c0-4.516 3.673-8.19 8.192-8.19 4.517 0 8.19 3.674 8.19 8.19 0 4.517-3.673 8.003-8.449 8.003z"/></svg>
+            WhatsApp number
+          </label>
+          <span class="input-icon"><svg viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.149-.15.298-.347.446-.52.15-.174.198-.3.298-.5.099-.198.05-.371-.05-.52-.099-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.06 3.147 4.995 4.29 2.936 1.142 2.936.762 3.464.71.528-.05 1.706-.698 1.955-1.372.248-.674.248-1.253.173-1.372-.074-.12-.272-.198-.57-.347z"/><path d="M12.004 2c-5.514 0-9.98 4.465-9.98 9.98 0 1.955.564 3.783 1.541 5.32L2 22l4.828-1.523a9.933 9.933 0 0 0 5.176 1.436c5.514 0 9.98-4.465 9.98-9.98C21.984 6.465 17.52 2 12.004 2zm0 18.183a8.16 8.16 0 0 1-4.223-1.174l-.303-.18-2.865.903.912-2.834-.198-.29a8.15 8.15 0 0 1-1.256-4.428c0-4.516 3.673-8.19 8.192-8.19 4.517 0 8.19 3.674 8.19 8.19 0 4.517-3.673 8.003-8.449 8.003z"/></svg></span>
+          <input type="tel" id="phone" name="phone" placeholder="+91 98765 43210" required />
+          <small style="color:var(--gray); font-size:12px; display:block; margin-top:5px;">Include your country code — we'll send course updates here.</small>
+        </div>
+
+        <div class="checkbox-row">
+          <input type="checkbox" id="samePhone" name="samePhone" />
+          <label for="samePhone" class="checkbox-label">My phone number is the same as my WhatsApp number</label>
+        </div>
+
+        <div class="field" id="phoneField">
+          <label for="contact_phone">Phone number</label>
+          <input type="tel" id="contact_phone" name="contact_phone" placeholder="+91 98765 43210" required />
         </div>
 
         <div class="field">
@@ -230,6 +295,28 @@
     const form = document.getElementById('registerForm');
     const statusMsg = document.getElementById('statusMsg');
     const submitBtn = document.getElementById('submitBtn');
+    const samePhoneCheckbox = document.getElementById('samePhone');
+    const phoneField = document.getElementById('phoneField');
+    const whatsappInput = document.getElementById('phone');
+    const contactPhoneInput = document.getElementById('contact_phone');
+
+    function syncPhoneField() {
+      if (samePhoneCheckbox.checked) {
+        contactPhoneInput.value = whatsappInput.value;
+        contactPhoneInput.disabled = true;
+        contactPhoneInput.required = false;
+        phoneField.style.opacity = '0.5';
+      } else {
+        contactPhoneInput.disabled = false;
+        contactPhoneInput.required = true;
+        phoneField.style.opacity = '1';
+      }
+    }
+
+    samePhoneCheckbox.addEventListener('change', syncPhoneField);
+    whatsappInput.addEventListener('input', () => {
+      if (samePhoneCheckbox.checked) contactPhoneInput.value = whatsappInput.value;
+    });
 
     form.addEventListener('submit', async (e) => {
       e.preventDefault();
@@ -239,10 +326,23 @@
       const full_name = document.getElementById('full_name').value.trim();
       const email = document.getElementById('email').value.trim();
       const phone = document.getElementById('phone').value.trim();
+      const contact_phone = samePhoneCheckbox.checked ? phone : contactPhoneInput.value.trim();
       const role = document.getElementById('role').value;
 
-      if (!full_name || !email || !role) {
-        statusMsg.textContent = 'Please fill in your name, email, and role.';
+      if (!full_name || !email || !role || !phone || !contact_phone) {
+        statusMsg.textContent = 'Please fill in your name, email, phone, WhatsApp number, and role.';
+        statusMsg.classList.add('error');
+        return;
+      }
+
+      if (!/^\+\d{7,15}$/.test(phone.replace(/[\s-]/g, ''))) {
+        statusMsg.textContent = 'Please include your country code for WhatsApp, e.g. +91 98765 43210.';
+        statusMsg.classList.add('error');
+        return;
+      }
+
+      if (!/^\+\d{7,15}$/.test(contact_phone.replace(/[\s-]/g, ''))) {
+        statusMsg.textContent = 'Please include your country code for your phone number, e.g. +91 98765 43210.';
         statusMsg.classList.add('error');
         return;
       }
@@ -252,13 +352,21 @@
 
       try {
         const { error } = await client.from('registrations').insert([
-          { full_name, email, phone: phone || null, role }
+          { full_name, email, phone, contact_phone, role }
         ]);
 
         if (error) throw error;
 
         document.getElementById('formView').style.display = 'none';
         document.getElementById('successView').classList.add('show');
+
+        // Fire the confirmation email in the background.
+        // If this fails (e.g. Resend not configured yet), the
+        // registration itself has already succeeded, so we don't
+        // block or alarm the user — just log it quietly.
+        client.functions.invoke('send-confirmation-email', {
+          body: { full_name, email }
+        }).catch((e) => console.warn('Confirmation email not sent:', e));
       } catch (err) {
         statusMsg.textContent = 'Something went wrong: ' + err.message;
         statusMsg.classList.add('error');

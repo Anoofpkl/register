@@ -1,0 +1,668 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Excel for Research — Admin</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Archivo+Black&family=Poppins:wght@400;500;600;700&display=swap');
+
+  :root {
+    --bg: #0a0a0a;
+    --teal: #1fd6ae;
+    --teal-dim: #14a685;
+    --white: #f5f5f5;
+    --gray: #9a9a9a;
+    --panel: #141414;
+    --border: #2a2a2a;
+    --error: #ff6b6b;
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    background: var(--bg);
+    background-image:
+      linear-gradient(rgba(255,255,255,0.04) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(255,255,255,0.04) 1px, transparent 1px);
+    background-size: 42px 42px;
+    color: var(--white);
+    font-family: 'Poppins', sans-serif;
+    min-height: 100vh;
+  }
+
+  /* Lock screen */
+  #lockScreen {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+  }
+  .lock-card {
+    width: 100%;
+    max-width: 360px;
+    text-align: center;
+  }
+  .brand { font-weight: 700; font-size: 20px; margin-bottom: 24px; }
+  .brand span { color: var(--teal); }
+  .lock-card h1 {
+    font-family: 'Archivo Black', sans-serif;
+    font-size: 26px;
+    margin-bottom: 6px;
+  }
+  .lock-card p { color: var(--gray); font-size: 14px; margin-bottom: 24px; }
+  .lock-card input {
+    width: 100%;
+    background: var(--panel);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 13px 14px;
+    color: var(--white);
+    font-size: 15px;
+    outline: none;
+    margin-bottom: 14px;
+  }
+  .lock-card input:focus { border-color: var(--teal); }
+  .lock-card button {
+    width: 100%;
+    background: var(--teal);
+    color: #06251f;
+    border: none;
+    border-radius: 12px;
+    padding: 14px;
+    font-family: 'Archivo Black', sans-serif;
+    font-size: 17px;
+    cursor: pointer;
+  }
+  .lock-card button:hover { background: #35e6c0; }
+  .lock-error { color: var(--error); font-size: 13px; margin-top: 10px; min-height: 18px; }
+
+  /* Dashboard */
+  #dashboard { display: none; padding: 32px 20px 60px; }
+  #dashboard.show { display: block; }
+  .wrap { max-width: 1000px; margin: 0 auto; }
+
+  .top {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    flex-wrap: wrap;
+    gap: 16px;
+    margin-bottom: 28px;
+  }
+  .top h1 {
+    font-family: 'Archivo Black', sans-serif;
+    font-size: clamp(26px, 5vw, 34px);
+    margin: 0 0 4px;
+  }
+  .top p { color: var(--gray); margin: 0; font-size: 14px; }
+
+  .actions { display: flex; gap: 10px; flex-wrap: wrap; }
+  .btn {
+    background: transparent;
+    border: 1px solid var(--border);
+    color: var(--white);
+    border-radius: 8px;
+    padding: 10px 16px;
+    font-family: 'Poppins', sans-serif;
+    font-size: 13px;
+    font-weight: 600;
+    cursor: pointer;
+  }
+  .btn:hover { border-color: var(--teal); color: var(--teal); }
+  .btn.primary {
+    background: var(--teal);
+    color: #06251f;
+    border-color: var(--teal);
+  }
+  .btn.primary:hover { background: #35e6c0; }
+
+  .stats {
+    display: flex;
+    gap: 12px;
+    flex-wrap: wrap;
+    margin-bottom: 24px;
+  }
+  .stat {
+    background: var(--panel);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 16px 20px;
+    flex: 1;
+    min-width: 140px;
+  }
+  .stat .num {
+    font-family: 'Archivo Black', sans-serif;
+    font-size: 28px;
+    color: var(--teal);
+  }
+  .stat .label { color: var(--gray); font-size: 13px; margin-top: 2px; }
+
+  .toolbar {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 16px;
+    flex-wrap: wrap;
+  }
+  .toolbar input {
+    flex: 1;
+    min-width: 200px;
+    background: var(--panel);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 10px 14px;
+    color: var(--white);
+    font-size: 14px;
+    outline: none;
+  }
+  .toolbar input:focus { border-color: var(--teal); }
+
+  .details-panel {
+    background: var(--panel);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 18px 20px;
+    margin-bottom: 24px;
+  }
+  .details-panel h2 {
+    font-size: 15px;
+    margin: 0 0 4px;
+  }
+  .details-panel .hint {
+    color: var(--gray);
+    font-size: 12.5px;
+    margin: 0 0 12px;
+  }
+  .details-panel textarea {
+    width: 100%;
+    min-height: 110px;
+    background: #0f0f0f;
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 12px 14px;
+    color: var(--white);
+    font-family: 'Poppins', sans-serif;
+    font-size: 14px;
+    resize: vertical;
+    outline: none;
+    margin-bottom: 10px;
+  }
+  .details-panel textarea:focus { border-color: var(--teal); }
+  .details-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 10px;
+    flex-wrap: wrap;
+  }
+  .save-status {
+    font-size: 12.5px;
+    color: var(--teal);
+    min-height: 16px;
+  }
+  .save-status.error { color: var(--error); }
+
+  .btn.whatsapp {
+    background: #25D366;
+    color: #06251f;
+    border-color: #25D366;
+    padding: 7px 13px;
+    font-size: 12.5px;
+    white-space: nowrap;
+  }
+  .btn.whatsapp:hover { background: #1ebe59; color: #06251f; }
+  .btn.whatsapp:disabled {
+    background: #2a2a2a;
+    color: var(--gray);
+    border-color: var(--border);
+    cursor: not-allowed;
+  }
+
+  .action-icons { display: flex; gap: 8px; }
+  .icon-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 32px;
+    height: 32px;
+    border-radius: 8px;
+    border: 1px solid var(--border);
+    background: transparent;
+    cursor: pointer;
+    text-decoration: none;
+    transition: border-color 0.15s ease, background 0.15s ease;
+  }
+  .icon-btn svg { width: 16px; height: 16px; display: block; }
+  .icon-btn.whatsapp-icon { border-color: rgba(37,211,102,0.35); }
+  .icon-btn.whatsapp-icon svg { fill: #25D366; }
+  .icon-btn.whatsapp-icon:hover { background: rgba(37,211,102,0.12); border-color: #25D366; }
+  .icon-btn.email-icon { border-color: rgba(31,214,174,0.35); }
+  .icon-btn.email-icon svg { fill: var(--teal); }
+  .icon-btn.email-icon:hover { background: rgba(31,214,174,0.12); border-color: var(--teal); }
+  .icon-btn.disabled {
+    opacity: 0.35;
+    cursor: not-allowed;
+    pointer-events: none;
+  }
+  .email-status {
+    font-size: 11px;
+    color: var(--gray);
+    margin-top: 4px;
+    min-height: 14px;
+  }
+  .email-status.success { color: var(--teal); }
+  .email-status.error { color: var(--error); }
+
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    background: var(--panel);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    overflow: hidden;
+    font-size: 14px;
+  }
+  thead th {
+    text-align: left;
+    padding: 12px 16px;
+    color: var(--gray);
+    font-weight: 600;
+    font-size: 12px;
+    text-transform: uppercase;
+    letter-spacing: 0.03em;
+    border-bottom: 1px solid var(--border);
+  }
+  tbody td {
+    padding: 13px 16px;
+    border-bottom: 1px solid var(--border);
+    vertical-align: top;
+  }
+  tbody tr:last-child td { border-bottom: none; }
+  tbody tr:hover { background: rgba(31,214,174,0.04); }
+  .role-tag {
+    display: inline-block;
+    border: 1px solid rgba(31,214,174,0.4);
+    color: var(--teal);
+    font-size: 12px;
+    padding: 3px 10px;
+    border-radius: 20px;
+    white-space: nowrap;
+  }
+  .muted { color: var(--gray); }
+
+  .table-wrap { overflow-x: auto; }
+
+  .empty, .loading, .error-msg {
+    text-align: center;
+    color: var(--gray);
+    padding: 60px 20px;
+  }
+  .error-msg { color: var(--error); }
+
+  @media (max-width: 640px) {
+    thead { display: none; }
+    table, tbody, tr, td { display: block; width: 100%; }
+    tbody tr {
+      border-bottom: 1px solid var(--border);
+      padding: 12px 16px;
+    }
+    tbody td {
+      border: none;
+      padding: 4px 0;
+      display: flex;
+      justify-content: space-between;
+      gap: 10px;
+    }
+    tbody td::before {
+      content: attr(data-label);
+      color: var(--gray);
+      font-size: 12px;
+      text-transform: uppercase;
+    }
+  }
+</style>
+</head>
+<body>
+
+  <div id="lockScreen">
+    <div class="lock-card">
+      <div class="brand">Know<span>it</span></div>
+      <h1>Admin Access</h1>
+      <p>Enter the admin password to view registrations.</p>
+      <input type="password" id="pwInput" placeholder="Password" autocomplete="current-password" />
+      <button id="unlockBtn">Unlock</button>
+      <div class="lock-error" id="lockError"></div>
+    </div>
+  </div>
+
+  <div id="dashboard">
+    <div class="wrap">
+      <div class="top">
+        <div>
+          <h1>Registrations</h1>
+          <p>Excel for Research — course sign-ups</p>
+        </div>
+        <div class="actions">
+          <button class="btn" id="refreshBtn">Refresh</button>
+          <button class="btn" id="exportBtn">Export CSV</button>
+          <button class="btn primary" id="lockBtn">Lock</button>
+        </div>
+      </div>
+
+      <div class="stats" id="stats"></div>
+
+      <div class="details-panel">
+        <h2>Course details message</h2>
+        <p class="hint">This is the message sent when you tap "WhatsApp" next to a registrant. Edit it and hit Save — it's shared across all admins.</p>
+        <textarea id="courseDetails" placeholder="e.g. Hi! Here are the details for Excel for Research: dates, timings, joining link, and what to bring..."></textarea>
+        <div class="details-row">
+          <button class="btn primary" id="saveDetailsBtn">Save details</button>
+          <div class="save-status" id="saveStatus"></div>
+        </div>
+      </div>
+
+      <div class="toolbar">
+        <input type="text" id="searchInput" placeholder="Search by name, email, or role…" />
+      </div>
+
+      <div class="table-wrap">
+        <table id="table" style="display:none;">
+          <thead>
+            <tr>
+              <th>Name</th>
+              <th>Email</th>
+              <th>Phone</th>
+              <th>Role</th>
+              <th>Registered</th>
+              <th>Actions</th>
+            </tr>
+          </thead>
+          <tbody id="tbody"></tbody>
+        </table>
+        <div class="loading" id="loadingMsg">Loading registrations…</div>
+        <div class="empty" id="emptyMsg" style="display:none;">No registrations yet.</div>
+        <div class="error-msg" id="errorMsg" style="display:none;"></div>
+      </div>
+    </div>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
+  <script>
+    const SUPABASE_URL = "https://hprewmvllfeaiagwwoag.supabase.co";
+    const SUPABASE_KEY = "sb_publishable_KElzcjqA-uASN50i7fSPQQ_JQIQc2ih";
+    const client = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+
+    // NOTE: this is a client-side password gate for casual protection only.
+    // The data itself is readable by anyone with the Supabase key above,
+    // since it's embedded in this page's source. Don't use this for
+    // sensitive data — see the message at the end of this chat for options.
+    const ADMIN_PASSWORD = "excel2026";
+
+    let allRows = [];
+
+    const lockScreen = document.getElementById('lockScreen');
+    const dashboard = document.getElementById('dashboard');
+    const pwInput = document.getElementById('pwInput');
+    const lockError = document.getElementById('lockError');
+
+    function unlock() {
+      if (pwInput.value === ADMIN_PASSWORD) {
+        sessionStorage.setItem('excel_admin_unlocked', '1');
+        lockScreen.style.display = 'none';
+        dashboard.classList.add('show');
+        loadData();
+        loadCourseDetails();
+      } else {
+        lockError.textContent = 'Incorrect password.';
+      }
+    }
+
+    document.getElementById('unlockBtn').addEventListener('click', unlock);
+    pwInput.addEventListener('keydown', (e) => { if (e.key === 'Enter') unlock(); });
+
+    document.getElementById('lockBtn').addEventListener('click', () => {
+      sessionStorage.removeItem('excel_admin_unlocked');
+      dashboard.classList.remove('show');
+      lockScreen.style.display = 'flex';
+      pwInput.value = '';
+    });
+
+    if (sessionStorage.getItem('excel_admin_unlocked') === '1') {
+      lockScreen.style.display = 'none';
+      dashboard.classList.add('show');
+      loadData();
+      loadCourseDetails();
+    }
+
+    async function loadData() {
+      const loadingMsg = document.getElementById('loadingMsg');
+      const emptyMsg = document.getElementById('emptyMsg');
+      const errorMsg = document.getElementById('errorMsg');
+      const table = document.getElementById('table');
+
+      loadingMsg.style.display = 'block';
+      emptyMsg.style.display = 'none';
+      errorMsg.style.display = 'none';
+      table.style.display = 'none';
+
+      try {
+        const { data, error } = await client
+          .from('registrations')
+          .select('*')
+          .order('created_at', { ascending: false });
+
+        if (error) throw error;
+
+        allRows = data || [];
+        loadingMsg.style.display = 'none';
+        renderStats(allRows);
+        renderTable(allRows);
+      } catch (err) {
+        loadingMsg.style.display = 'none';
+        errorMsg.style.display = 'block';
+        errorMsg.textContent = 'Could not load registrations: ' + err.message;
+      }
+    }
+
+    function renderStats(rows) {
+      const statsEl = document.getElementById('stats');
+      const roleCounts = {};
+      rows.forEach(r => {
+        const role = r.role || 'Unspecified';
+        roleCounts[role] = (roleCounts[role] || 0) + 1;
+      });
+      const topRole = Object.entries(roleCounts).sort((a,b) => b[1]-a[1])[0];
+
+      statsEl.innerHTML = `
+        <div class="stat">
+          <div class="num">${rows.length}</div>
+          <div class="label">Total registrations</div>
+        </div>
+        <div class="stat">
+          <div class="num">${topRole ? topRole[1] : 0}</div>
+          <div class="label">${topRole ? topRole[0] : 'No'} registrants</div>
+        </div>
+      `;
+    }
+
+    function renderTable(rows) {
+      const tbody = document.getElementById('tbody');
+      const table = document.getElementById('table');
+      const emptyMsg = document.getElementById('emptyMsg');
+
+      if (rows.length === 0) {
+        table.style.display = 'none';
+        emptyMsg.style.display = 'block';
+        return;
+      }
+
+      table.style.display = 'table';
+      emptyMsg.style.display = 'none';
+
+      tbody.innerHTML = rows.map(r => `
+        <tr>
+          <td data-label="Name">${escapeHtml(r.full_name || '')}</td>
+          <td data-label="Email">${escapeHtml(r.email || '')}</td>
+          <td data-label="Phone">${r.phone ? escapeHtml(r.phone) : '<span class="muted">—</span>'}</td>
+          <td data-label="Role">${r.role ? `<span class="role-tag">${escapeHtml(r.role)}</span>` : '<span class="muted">—</span>'}</td>
+          <td data-label="Registered">${formatDate(r.created_at)}</td>
+          <td data-label="Actions">
+            <div class="action-icons">
+              <button
+                class="icon-btn whatsapp-icon ${r.phone ? '' : 'disabled'}"
+                title="${r.phone ? 'Send via WhatsApp' : 'No phone number on file'}"
+                onclick="openWhatsApp('${escapeAttr(r.phone || '')}', '${escapeAttr(r.full_name || '')}')">
+                <svg viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.149-.15.298-.347.446-.52.15-.174.198-.3.298-.5.099-.198.05-.371-.05-.52-.099-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.06 3.147 4.995 4.29 2.936 1.142 2.936.762 3.464.71.528-.05 1.706-.698 1.955-1.372.248-.674.248-1.253.173-1.372-.074-.12-.272-.198-.57-.347z"/><path d="M12.004 2c-5.514 0-9.98 4.465-9.98 9.98 0 1.955.564 3.783 1.541 5.32L2 22l4.828-1.523a9.933 9.933 0 0 0 5.176 1.436c5.514 0 9.98-4.465 9.98-9.98C21.984 6.465 17.52 2 12.004 2zm0 18.183a8.16 8.16 0 0 1-4.223-1.174l-.303-.18-2.865.903.912-2.834-.198-.29a8.15 8.15 0 0 1-1.256-4.428c0-4.516 3.673-8.19 8.192-8.19 4.517 0 8.19 3.674 8.19 8.19 0 4.517-3.673 8.003-8.449 8.003z"/></svg>
+              </button>
+              <button
+                id="email-btn-${r.id}"
+                class="icon-btn email-icon ${r.email ? '' : 'disabled'}"
+                title="${r.email ? 'Send course details by email' : 'No email on file'}"
+                onclick="sendAdminEmail('${r.id}', '${escapeAttr(r.email || '')}', '${escapeAttr(r.full_name || '')}')">
+                <svg viewBox="0 0 24 24"><path d="M20 4H4a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V6a2 2 0 0 0-2-2zm0 2v.01L12 12 4 6.01V6h16zM4 18V8.24l8 6 8-6V18H4z"/></svg>
+              </button>
+            </div>
+            <div class="email-status" id="email-status-${r.id}"></div>
+          </td>
+        </tr>
+      `).join('');
+    }
+
+    function formatDate(iso) {
+      if (!iso) return '—';
+      const d = new Date(iso);
+      return d.toLocaleDateString(undefined, { month: 'short', day: 'numeric', year: 'numeric' }) +
+             ' · ' + d.toLocaleTimeString(undefined, { hour: '2-digit', minute: '2-digit' });
+    }
+
+    function escapeHtml(str) {
+      const div = document.createElement('div');
+      div.textContent = str;
+      return div.innerHTML;
+    }
+
+    function escapeAttr(str) {
+      return String(str).replace(/'/g, "\\'").replace(/"/g, '&quot;');
+    }
+
+    document.getElementById('searchInput').addEventListener('input', (e) => {
+      const q = e.target.value.trim().toLowerCase();
+      if (!q) { renderTable(allRows); return; }
+      const filtered = allRows.filter(r =>
+        (r.full_name || '').toLowerCase().includes(q) ||
+        (r.email || '').toLowerCase().includes(q) ||
+        (r.role || '').toLowerCase().includes(q) ||
+        (r.phone || '').toLowerCase().includes(q)
+      );
+      renderTable(filtered);
+    });
+
+    async function loadCourseDetails() {
+      const textarea = document.getElementById('courseDetails');
+      const saveStatus = document.getElementById('saveStatus');
+      try {
+        const { data, error } = await client
+          .from('settings')
+          .select('value')
+          .eq('key', 'course_details_message')
+          .maybeSingle();
+
+        if (error) throw error;
+        textarea.value = data?.value || defaultCourseMessage();
+      } catch (err) {
+        textarea.value = defaultCourseMessage();
+        saveStatus.textContent = 'Could not load saved message, showing a default.';
+        saveStatus.classList.add('error');
+      }
+    }
+
+    function defaultCourseMessage() {
+      return "Hi! Here are the details for Excel for Research:\n\n" +
+        "📅 Dates: [add dates]\n" +
+        "🕐 Timings: [add timings]\n" +
+        "🔗 Joining link: [add link]\n\n" +
+        "See you there!\n— Know It Team";
+    }
+
+    document.getElementById('saveDetailsBtn').addEventListener('click', async () => {
+      const textarea = document.getElementById('courseDetails');
+      const saveStatus = document.getElementById('saveStatus');
+      saveStatus.classList.remove('error');
+      saveStatus.textContent = 'Saving…';
+
+      try {
+        const { error } = await client
+          .from('settings')
+          .upsert({ key: 'course_details_message', value: textarea.value, updated_at: new Date().toISOString() });
+
+        if (error) throw error;
+        saveStatus.textContent = 'Saved ✓';
+        setTimeout(() => { saveStatus.textContent = ''; }, 2500);
+      } catch (err) {
+        saveStatus.classList.add('error');
+        saveStatus.textContent = 'Could not save: ' + err.message;
+      }
+    });
+
+    function openWhatsApp(phone, name) {
+      const message = document.getElementById('courseDetails').value || defaultCourseMessage();
+      const digits = (phone || '').replace(/[^\d]/g, '');
+      if (!digits) return;
+      const text = encodeURIComponent(`Hi ${name},\n\n${message}`);
+      window.open(`https://wa.me/${digits}?text=${text}`, '_blank');
+    }
+
+    async function sendAdminEmail(rowId, email, fullName) {
+      if (!email) return;
+      const btn = document.getElementById(`email-btn-${rowId}`);
+      const status = document.getElementById(`email-status-${rowId}`);
+      const message = document.getElementById('courseDetails').value || defaultCourseMessage();
+
+      status.classList.remove('success', 'error');
+      status.textContent = 'Sending…';
+      btn.disabled = true;
+
+      try {
+        const { data, error } = await client.functions.invoke('send-admin-email', {
+          body: {
+            full_name: fullName,
+            email: email,
+            message: message,
+            subject: 'Excel for Research — Course Details'
+          }
+        });
+
+        if (error) throw error;
+        if (data?.error) throw new Error(data.error);
+
+        status.classList.add('success');
+        status.textContent = 'Sent ✓';
+        setTimeout(() => { status.textContent = ''; status.classList.remove('success'); }, 3000);
+      } catch (err) {
+        status.classList.add('error');
+        status.textContent = 'Failed: ' + err.message;
+      } finally {
+        btn.disabled = false;
+      }
+    }
+
+    document.getElementById('exportBtn').addEventListener('click', () => {
+      if (allRows.length === 0) return;
+      const headers = ['Full Name', 'Email', 'Phone', 'Role', 'Registered At'];
+      const csvRows = [headers.join(',')];
+      allRows.forEach(r => {
+        const row = [r.full_name, r.email, r.phone || '', r.role || '', r.created_at]
+          .map(v => `"${String(v || '').replace(/"/g, '""')}"`);
+        csvRows.push(row.join(','));
+      });
+      const blob = new Blob([csvRows.join('\n')], { type: 'text/csv' });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = 'excel-for-research-registrations.csv';
+      a.click();
+      URL.revokeObjectURL(url);
+    });
+  </script>
+</body>
+</html>

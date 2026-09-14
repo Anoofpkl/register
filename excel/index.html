@@ -136,6 +136,36 @@
     line-height: 1.4;
   }
 
+  .phone-input-group {
+    display: flex;
+    gap: 8px;
+  }
+  .phone-input-group select {
+    flex: 0 0 108px;
+    background: #141414;
+    border: 1px solid #2a2a2a;
+    border-radius: 10px;
+    padding: 13px 8px;
+    color: var(--white);
+    font-family: inherit;
+    font-size: 14px;
+    outline: none;
+    appearance: none;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%239a9a9a' stroke-width='1.5' fill='none' fill-rule='evenodd'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 10px center;
+  }
+  .phone-input-group select:focus { border-color: var(--teal); }
+  .phone-input-group input {
+    flex: 1;
+    min-width: 0;
+    padding-left: 14px !important;
+  }
+  .field.whatsapp-field .input-icon,
+  .field.phone-field .input-icon {
+    display: none;
+  }
+
   .field input,
   .field select {
     width: 100%;
@@ -248,9 +278,11 @@
             <svg viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.149-.15.298-.347.446-.52.15-.174.198-.3.298-.5.099-.198.05-.371-.05-.52-.099-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.06 3.147 4.995 4.29 2.936 1.142 2.936.762 3.464.71.528-.05 1.706-.698 1.955-1.372.248-.674.248-1.253.173-1.372-.074-.12-.272-.198-.57-.347z"/><path d="M12.004 2c-5.514 0-9.98 4.465-9.98 9.98 0 1.955.564 3.783 1.541 5.32L2 22l4.828-1.523a9.933 9.933 0 0 0 5.176 1.436c5.514 0 9.98-4.465 9.98-9.98C21.984 6.465 17.52 2 12.004 2zm0 18.183a8.16 8.16 0 0 1-4.223-1.174l-.303-.18-2.865.903.912-2.834-.198-.29a8.15 8.15 0 0 1-1.256-4.428c0-4.516 3.673-8.19 8.192-8.19 4.517 0 8.19 3.674 8.19 8.19 0 4.517-3.673 8.003-8.449 8.003z"/></svg>
             WhatsApp number
           </label>
-          <span class="input-icon"><svg viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.149-.15.298-.347.446-.52.15-.174.198-.3.298-.5.099-.198.05-.371-.05-.52-.099-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.06 3.147 4.995 4.29 2.936 1.142 2.936.762 3.464.71.528-.05 1.706-.698 1.955-1.372.248-.674.248-1.253.173-1.372-.074-.12-.272-.198-.57-.347z"/><path d="M12.004 2c-5.514 0-9.98 4.465-9.98 9.98 0 1.955.564 3.783 1.541 5.32L2 22l4.828-1.523a9.933 9.933 0 0 0 5.176 1.436c5.514 0 9.98-4.465 9.98-9.98C21.984 6.465 17.52 2 12.004 2zm0 18.183a8.16 8.16 0 0 1-4.223-1.174l-.303-.18-2.865.903.912-2.834-.198-.29a8.15 8.15 0 0 1-1.256-4.428c0-4.516 3.673-8.19 8.192-8.19 4.517 0 8.19 3.674 8.19 8.19 0 4.517-3.673 8.003-8.449 8.003z"/></svg></span>
-          <input type="tel" id="phone" name="phone" placeholder="+91 98765 43210" required />
-          <small style="color:var(--gray); font-size:12px; display:block; margin-top:5px;">Include your country code — we'll send course updates here.</small>
+          <div class="phone-input-group">
+            <select id="whatsapp_country" name="whatsapp_country"></select>
+            <input type="tel" id="phone" name="phone" placeholder="98765 43210" required />
+          </div>
+          <small style="color:var(--gray); font-size:12px; display:block; margin-top:5px;">We'll send course updates here.</small>
         </div>
 
         <div class="checkbox-row">
@@ -258,9 +290,12 @@
           <label for="samePhone" class="checkbox-label">My phone number is the same as my WhatsApp number</label>
         </div>
 
-        <div class="field" id="phoneField">
+        <div class="field phone-field" id="phoneField">
           <label for="contact_phone">Phone number</label>
-          <input type="tel" id="contact_phone" name="contact_phone" placeholder="+91 98765 43210" required />
+          <div class="phone-input-group">
+            <select id="phone_country" name="phone_country"></select>
+            <input type="tel" id="contact_phone" name="contact_phone" placeholder="98765 43210" required />
+          </div>
         </div>
 
         <div class="field">
@@ -299,15 +334,55 @@
     const phoneField = document.getElementById('phoneField');
     const whatsappInput = document.getElementById('phone');
     const contactPhoneInput = document.getElementById('contact_phone');
+    const whatsappCountrySelect = document.getElementById('whatsapp_country');
+    const phoneCountrySelect = document.getElementById('phone_country');
+
+    // India listed first as the default. Add more countries here as needed.
+    const COUNTRIES = [
+      { code: 'IN', dial: '91', flag: '🇮🇳', name: 'India' },
+      { code: 'US', dial: '1', flag: '🇺🇸', name: 'United States' },
+      { code: 'GB', dial: '44', flag: '🇬🇧', name: 'United Kingdom' },
+      { code: 'AE', dial: '971', flag: '🇦🇪', name: 'UAE' },
+      { code: 'AU', dial: '61', flag: '🇦🇺', name: 'Australia' },
+      { code: 'CA', dial: '1', flag: '🇨🇦', name: 'Canada' },
+      { code: 'SG', dial: '65', flag: '🇸🇬', name: 'Singapore' },
+      { code: 'DE', dial: '49', flag: '🇩🇪', name: 'Germany' },
+      { code: 'FR', dial: '33', flag: '🇫🇷', name: 'France' },
+      { code: 'NP', dial: '977', flag: '🇳🇵', name: 'Nepal' },
+      { code: 'BD', dial: '880', flag: '🇧🇩', name: 'Bangladesh' },
+      { code: 'PK', dial: '92', flag: '🇵🇰', name: 'Pakistan' },
+      { code: 'LK', dial: '94', flag: '🇱🇰', name: 'Sri Lanka' },
+      { code: 'SA', dial: '966', flag: '🇸🇦', name: 'Saudi Arabia' },
+      { code: 'QA', dial: '974', flag: '🇶🇦', name: 'Qatar' },
+      { code: 'KW', dial: '965', flag: '🇰🇼', name: 'Kuwait' },
+      { code: 'OM', dial: '968', flag: '🇴🇲', name: 'Oman' },
+      { code: 'MY', dial: '60', flag: '🇲🇾', name: 'Malaysia' },
+      { code: 'JP', dial: '81', flag: '🇯🇵', name: 'Japan' },
+      { code: 'NZ', dial: '64', flag: '🇳🇿', name: 'New Zealand' },
+      { code: 'ZA', dial: '27', flag: '🇿🇦', name: 'South Africa' },
+    ];
+
+    function populateCountrySelect(select) {
+      select.innerHTML = COUNTRIES.map(c =>
+        `<option value="${c.dial}">${c.flag} +${c.dial}</option>`
+      ).join('');
+      select.value = '91'; // India by default
+    }
+
+    populateCountrySelect(whatsappCountrySelect);
+    populateCountrySelect(phoneCountrySelect);
 
     function syncPhoneField() {
       if (samePhoneCheckbox.checked) {
         contactPhoneInput.value = whatsappInput.value;
+        phoneCountrySelect.value = whatsappCountrySelect.value;
         contactPhoneInput.disabled = true;
+        phoneCountrySelect.disabled = true;
         contactPhoneInput.required = false;
         phoneField.style.opacity = '0.5';
       } else {
         contactPhoneInput.disabled = false;
+        phoneCountrySelect.disabled = false;
         contactPhoneInput.required = true;
         phoneField.style.opacity = '1';
       }
@@ -317,6 +392,9 @@
     whatsappInput.addEventListener('input', () => {
       if (samePhoneCheckbox.checked) contactPhoneInput.value = whatsappInput.value;
     });
+    whatsappCountrySelect.addEventListener('change', () => {
+      if (samePhoneCheckbox.checked) phoneCountrySelect.value = whatsappCountrySelect.value;
+    });
 
     form.addEventListener('submit', async (e) => {
       e.preventDefault();
@@ -325,27 +403,32 @@
 
       const full_name = document.getElementById('full_name').value.trim();
       const email = document.getElementById('email').value.trim();
-      const phone = document.getElementById('phone').value.trim();
-      const contact_phone = samePhoneCheckbox.checked ? phone : contactPhoneInput.value.trim();
+      const whatsappDigits = whatsappInput.value.trim().replace(/[\s-]/g, '');
+      const contactDigits = samePhoneCheckbox.checked
+        ? whatsappDigits
+        : contactPhoneInput.value.trim().replace(/[\s-]/g, '');
       const role = document.getElementById('role').value;
 
-      if (!full_name || !email || !role || !phone || !contact_phone) {
+      if (!full_name || !email || !role || !whatsappDigits || !contactDigits) {
         statusMsg.textContent = 'Please fill in your name, email, phone, WhatsApp number, and role.';
         statusMsg.classList.add('error');
         return;
       }
 
-      if (!/^\+\d{7,15}$/.test(phone.replace(/[\s-]/g, ''))) {
-        statusMsg.textContent = 'Please include your country code for WhatsApp, e.g. +91 98765 43210.';
+      if (!/^\d{6,14}$/.test(whatsappDigits)) {
+        statusMsg.textContent = 'Please enter a valid WhatsApp number.';
         statusMsg.classList.add('error');
         return;
       }
 
-      if (!/^\+\d{7,15}$/.test(contact_phone.replace(/[\s-]/g, ''))) {
-        statusMsg.textContent = 'Please include your country code for your phone number, e.g. +91 98765 43210.';
+      if (!/^\d{6,14}$/.test(contactDigits)) {
+        statusMsg.textContent = 'Please enter a valid phone number.';
         statusMsg.classList.add('error');
         return;
       }
+
+      const phone = `+${whatsappCountrySelect.value}${whatsappDigits}`;
+      const contact_phone = `+${phoneCountrySelect.value}${contactDigits}`;
 
       submitBtn.disabled = true;
       submitBtn.textContent = 'Registering…';
@@ -368,6 +451,15 @@
           body: { full_name, email }
         }).catch((e) => console.warn('Confirmation email not sent:', e));
       } catch (err) {
+        statusMsg.textContent = 'Something went wrong: ' + err.message;
+        statusMsg.classList.add('error');
+        submitBtn.disabled = false;
+        submitBtn.textContent = 'Register Now';
+      }
+    });
+  </script>
+</body>
+</html>
         statusMsg.textContent = 'Something went wrong: ' + err.message;
         statusMsg.classList.add('error');
         submitBtn.disabled = false;

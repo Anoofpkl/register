@@ -1,0 +1,520 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Knowit — Future-ready starts here</title>
+<meta name="description" content="Knowit builds AI, digital, and leadership skills for the future of work. Knowledge → Skill → Impact." />
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Archivo+Black&family=Poppins:wght@400;500;600;700&display=swap');
+
+  :root {
+    --bg: #0a0a0a;
+    --bg2: #0e0e0e;
+    --teal: #1fd6ae;
+    --teal-dim: #14a685;
+    --white: #f5f5f5;
+    --gray: #9a9a9a;
+    --border: #232323;
+    --panel: #131313;
+  }
+
+  * { box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+
+  body {
+    margin: 0;
+    background: var(--bg);
+    color: var(--white);
+    font-family: 'Poppins', sans-serif;
+    line-height: 1.5;
+  }
+
+  a { color: inherit; }
+
+  .grid-bg {
+    background-image:
+      linear-gradient(rgba(255,255,255,0.035) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(255,255,255,0.035) 1px, transparent 1px);
+    background-size: 44px 44px;
+  }
+
+  .wrap {
+    max-width: 1080px;
+    margin: 0 auto;
+    padding: 0 24px;
+  }
+
+  /* ---------- Header ---------- */
+  header {
+    position: sticky;
+    top: 0;
+    z-index: 50;
+    background: rgba(10,10,10,0.85);
+    backdrop-filter: blur(8px);
+    border-bottom: 1px solid var(--border);
+  }
+  .header-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 18px 0;
+  }
+  .logo {
+    font-weight: 700;
+    font-size: 21px;
+    letter-spacing: -0.01em;
+  }
+  .logo span { color: var(--teal); }
+
+  nav {
+    display: flex;
+    align-items: center;
+    gap: 28px;
+  }
+  nav a.nav-link {
+    font-size: 14px;
+    color: var(--gray);
+    text-decoration: none;
+    transition: color 0.15s ease;
+  }
+  nav a.nav-link:hover { color: var(--white); }
+
+  .socials { display: flex; gap: 10px; }
+  .icon-circle {
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    border: 1px solid var(--border);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-decoration: none;
+    transition: border-color 0.15s ease, transform 0.15s ease;
+  }
+  .icon-circle:hover { transform: translateY(-2px); }
+  .icon-circle svg { width: 17px; height: 17px; }
+  .icon-circle.instagram { border-color: rgba(225,48,108,0.35); }
+  .icon-circle.instagram svg { fill: #E1306C; }
+  .icon-circle.instagram:hover { border-color: #E1306C; }
+  .icon-circle.whatsapp { border-color: rgba(37,211,102,0.35); }
+  .icon-circle.whatsapp svg { fill: #25D366; }
+  .icon-circle.whatsapp:hover { border-color: #25D366; }
+
+  .mobile-toggle { display: none; }
+
+  /* ---------- Hero ---------- */
+  .hero {
+    padding: 92px 0 84px;
+    position: relative;
+    overflow: hidden;
+  }
+  .hero::before {
+    content: '';
+    position: absolute;
+    top: -140px;
+    right: -160px;
+    width: 480px;
+    height: 480px;
+    border-radius: 50%;
+    background: conic-gradient(from 200deg, #f9a825, #e1306c, #1fd6ae, #f9a825);
+    filter: blur(140px);
+    opacity: 0.28;
+    pointer-events: none;
+  }
+  .hero-inner { position: relative; max-width: 640px; }
+
+  .eyebrow-ring {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 13px;
+    color: var(--gray);
+    border: 1px solid var(--border);
+    padding: 6px 14px 6px 6px;
+    border-radius: 30px;
+    margin-bottom: 28px;
+  }
+  .eyebrow-ring .dot {
+    width: 22px;
+    height: 22px;
+    border-radius: 50%;
+    background: conic-gradient(from 180deg, #f9a825, #e1306c, #833ab4, #1fd6ae, #f9a825);
+    flex-shrink: 0;
+  }
+
+  h1.hero-title {
+    font-family: 'Archivo Black', sans-serif;
+    font-size: clamp(40px, 6.4vw, 64px);
+    line-height: 1.04;
+    margin: 0 0 22px;
+    letter-spacing: 0.2px;
+  }
+
+  .hero-sub {
+    color: var(--gray);
+    font-size: 17px;
+    max-width: 520px;
+    margin: 0 0 30px;
+  }
+
+  .pillars {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-bottom: 38px;
+  }
+  .pillar {
+    border: 1px solid rgba(31,214,174,0.35);
+    color: var(--teal);
+    font-size: 13px;
+    padding: 6px 14px;
+    border-radius: 20px;
+  }
+
+  .cta-row { display: flex; flex-wrap: wrap; gap: 14px; }
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    font-family: 'Poppins', sans-serif;
+    font-weight: 600;
+    font-size: 15px;
+    padding: 14px 26px;
+    border-radius: 12px;
+    text-decoration: none;
+    border: 1px solid transparent;
+    cursor: pointer;
+    transition: background 0.15s ease, transform 0.1s ease, border-color 0.15s ease;
+  }
+  .btn:active { transform: scale(0.98); }
+  .btn-primary { background: var(--teal); color: #06251f; }
+  .btn-primary:hover { background: #35e6c0; }
+  .btn-outline { border-color: var(--border); color: var(--white); }
+  .btn-outline:hover { border-color: var(--teal); color: var(--teal); }
+
+  /* ---------- Framework ---------- */
+  .framework {
+    padding: 70px 0;
+    border-top: 1px solid var(--border);
+    border-bottom: 1px solid var(--border);
+  }
+  .framework-steps {
+    display: flex;
+    align-items: center;
+    gap: 18px;
+    flex-wrap: wrap;
+    margin-top: 30px;
+  }
+  .step {
+    flex: 1;
+    min-width: 160px;
+    background: var(--panel);
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    padding: 24px 22px;
+  }
+  .step .step-label {
+    font-size: 12px;
+    color: var(--gray);
+    margin-bottom: 6px;
+  }
+  .step .step-title {
+    font-family: 'Archivo Black', sans-serif;
+    font-size: 21px;
+    color: var(--teal);
+  }
+  .arrow {
+    color: var(--gray);
+    font-size: 22px;
+    flex-shrink: 0;
+  }
+  .section-title {
+    font-family: 'Archivo Black', sans-serif;
+    font-size: clamp(26px, 4vw, 34px);
+    margin: 0;
+  }
+  .section-lede {
+    color: var(--gray);
+    font-size: 15px;
+    max-width: 560px;
+    margin-top: 10px;
+  }
+
+  /* ---------- Courses ---------- */
+  .courses { padding: 84px 0; }
+  .course-card {
+    display: grid;
+    grid-template-columns: 1.1fr 0.9fr;
+    gap: 0;
+    background: var(--panel);
+    border: 1px solid var(--border);
+    border-radius: 20px;
+    overflow: hidden;
+    margin-top: 34px;
+  }
+  .course-main {
+    padding: 40px;
+  }
+  .course-kicker {
+    color: var(--teal);
+    font-size: 13px;
+    margin-bottom: 10px;
+  }
+  .course-main h3 {
+    font-family: 'Archivo Black', sans-serif;
+    font-size: 30px;
+    margin: 0 0 8px;
+  }
+  .course-main p.tagline {
+    color: var(--gray);
+    font-size: 15px;
+    margin: 0 0 22px;
+  }
+  .course-list {
+    list-style: none;
+    padding: 0;
+    margin: 0 0 26px;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+  }
+  .course-list li {
+    font-size: 14px;
+    color: var(--white);
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .course-list li::before {
+    content: '';
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: var(--teal);
+    flex-shrink: 0;
+  }
+  .course-aside {
+    background: #0f1614;
+    padding: 40px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    border-left: 1px solid var(--border);
+  }
+  .course-aside .who-title {
+    font-size: 13px;
+    color: var(--gray);
+    margin-bottom: 10px;
+  }
+  .course-aside .who-list {
+    font-size: 14px;
+    line-height: 1.9;
+    margin-bottom: 26px;
+  }
+
+  @media (max-width: 720px) {
+    .course-card { grid-template-columns: 1fr; }
+    .course-aside { border-left: none; border-top: 1px solid var(--border); }
+    .course-list { grid-template-columns: 1fr; }
+  }
+
+  /* ---------- About / founders ---------- */
+  .about {
+    padding: 84px 0;
+    border-top: 1px solid var(--border);
+  }
+  .quote-block {
+    margin-top: 30px;
+    max-width: 680px;
+  }
+  .quote-block p {
+    font-size: clamp(19px, 2.6vw, 24px);
+    line-height: 1.55;
+    color: var(--white);
+    margin: 0 0 22px;
+  }
+  .founders {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+  }
+  .founder-avatars { display: flex; }
+  .founder-avatars span {
+    width: 38px;
+    height: 38px;
+    border-radius: 50%;
+    background: var(--panel);
+    border: 2px solid var(--bg);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 13px;
+    font-weight: 700;
+    color: var(--teal);
+    margin-left: -10px;
+  }
+  .founder-avatars span:first-child { margin-left: 0; }
+  .founders-text { font-size: 13.5px; color: var(--gray); }
+  .founders-text strong { color: var(--white); font-weight: 600; }
+
+  /* ---------- Footer ---------- */
+  footer {
+    border-top: 1px solid var(--border);
+    padding: 40px 0;
+  }
+  .footer-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 18px;
+  }
+  .footer-copy { color: var(--gray); font-size: 13px; }
+
+  @media (max-width: 640px) {
+    nav.nav-links { display: none; }
+    .header-row { padding: 14px 0; }
+    .hero { padding: 60px 0 56px; }
+    .framework-steps { flex-direction: column; align-items: stretch; }
+    .arrow { transform: rotate(90deg); align-self: center; }
+  }
+</style>
+</head>
+<body class="grid-bg">
+
+  <header>
+    <div class="wrap header-row">
+      <div class="logo">Know<span>it</span></div>
+      <nav class="nav-links">
+        <a class="nav-link" href="#framework">Approach</a>
+        <a class="nav-link" href="#courses">Courses</a>
+        <a class="nav-link" href="#about">About</a>
+      </nav>
+      <div class="socials">
+        <a class="icon-circle instagram" href="https://www.instagram.com/knowit.official_" target="_blank" rel="noopener" aria-label="Knowit on Instagram">
+          <svg viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zM12 5.838a6.162 6.162 0 1 0 0 12.324 6.162 6.162 0 0 0 0-12.324zm0 10.162a4 4 0 1 1 0-8 4 4 0 0 1 0 8zm6.406-11.845a1.44 1.44 0 1 0 0 2.881 1.44 1.44 0 0 0 0-2.881z"/></svg>
+        </a>
+        <a class="icon-circle whatsapp" href="https://wa.me/message/XFP7F22GNZX5B1" target="_blank" rel="noopener" aria-label="Message Knowit on WhatsApp">
+          <svg viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.149-.15.298-.347.446-.52.15-.174.198-.3.298-.5.099-.198.05-.371-.05-.52-.099-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.06 3.147 4.995 4.29 2.936 1.142 2.936.762 3.464.71.528-.05 1.706-.698 1.955-1.372.248-.674.248-1.253.173-1.372-.074-.12-.272-.198-.57-.347z"/><path d="M12.004 2c-5.514 0-9.98 4.465-9.98 9.98 0 1.955.564 3.783 1.541 5.32L2 22l4.828-1.523a9.933 9.933 0 0 0 5.176 1.436c5.514 0 9.98-4.465 9.98-9.98C21.984 6.465 17.52 2 12.004 2zm0 18.183a8.16 8.16 0 0 1-4.223-1.174l-.303-.18-2.865.903.912-2.834-.198-.29a8.15 8.15 0 0 1-1.256-4.428c0-4.516 3.673-8.19 8.192-8.19 4.517 0 8.19 3.674 8.19 8.19 0 4.517-3.673 8.003-8.449 8.003z"/></svg>
+        </a>
+      </div>
+    </div>
+  </header>
+
+  <section class="hero">
+    <div class="wrap hero-inner">
+      <div class="eyebrow-ring"><span class="dot"></span> Education, built for what's next</div>
+      <h1 class="hero-title">Future-ready starts here.</h1>
+      <p class="hero-sub">
+        Knowit teaches the skills that turn expertise into impact — AI, digital
+        tools, communication, leadership, and critical thinking — through
+        practical, hands-on courses.
+      </p>
+      <div class="pillars">
+        <span class="pillar">AI</span>
+        <span class="pillar">Digital Skills</span>
+        <span class="pillar">Communication</span>
+        <span class="pillar">Leadership</span>
+        <span class="pillar">Critical Thinking</span>
+      </div>
+      <div class="cta-row">
+        <a class="btn btn-primary" href="/excel">Register for Excel for Research</a>
+        <a class="btn btn-outline" href="#courses">See what we teach</a>
+      </div>
+    </div>
+  </section>
+
+  <section class="framework" id="framework">
+    <div class="wrap">
+      <h2 class="section-title">Our approach</h2>
+      <p class="section-lede">Every Knowit course moves you through the same path — from understanding a skill, to practicing it, to using it where it counts.</p>
+      <div class="framework-steps">
+        <div class="step">
+          <div class="step-label">Start with</div>
+          <div class="step-title">Knowledge</div>
+        </div>
+        <div class="arrow">→</div>
+        <div class="step">
+          <div class="step-label">Build</div>
+          <div class="step-title">Skill</div>
+        </div>
+        <div class="arrow">→</div>
+        <div class="step">
+          <div class="step-label">Create</div>
+          <div class="step-title">Impact</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="courses" id="courses">
+    <div class="wrap">
+      <h2 class="section-title">Current course</h2>
+      <p class="section-lede">Hands-on, cohort-based, and built around real datasets.</p>
+
+      <div class="course-card">
+        <div class="course-main">
+          <div class="course-kicker">Open for registration</div>
+          <h3>Excel for Research</h3>
+          <p class="tagline">From raw data to research insights.</p>
+          <ul class="course-list">
+            <li>Learn</li>
+            <li>Analyze</li>
+            <li>Visualize</li>
+            <li>Present</li>
+          </ul>
+          <a class="btn btn-primary" href="/excel">Register Now</a>
+        </div>
+        <div class="course-aside">
+          <div class="who-title">Who it's for</div>
+          <div class="who-list">
+            Students<br/>
+            Research Scholars<br/>
+            Teachers<br/>
+            Academicians<br/>
+            Data Enthusiasts
+          </div>
+          <div class="who-title">Format</div>
+          <div class="who-list" style="margin-bottom:0;">Real research datasets and practical exercises.</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="about" id="about">
+    <div class="wrap">
+      <h2 class="section-title">Why we started Knowit</h2>
+      <div class="quote-block">
+        <p>"We started Knowit with one belief: knowledge without skill leaves potential untapped. Many people carry deep expertise, yet struggle to turn it into real-world impact."</p>
+        <div class="founders">
+          <div class="founder-avatars">
+            <span>H</span>
+            <span>A</span>
+          </div>
+          <div class="founders-text">
+            <strong>Hadi Muhammed VK</strong> &amp; <strong>Anoof Pulikkal</strong><br/>
+            Co-Founders, Knowit
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <div class="wrap footer-row">
+      <div class="logo">Know<span>it</span></div>
+      <div class="socials">
+        <a class="icon-circle instagram" href="https://www.instagram.com/knowit.official_" target="_blank" rel="noopener" aria-label="Knowit on Instagram">
+          <svg viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zM12 5.838a6.162 6.162 0 1 0 0 12.324 6.162 6.162 0 0 0 0-12.324zm0 10.162a4 4 0 1 1 0-8 4 4 0 0 1 0 8zm6.406-11.845a1.44 1.44 0 1 0 0 2.881 1.44 1.44 0 0 0 0-2.881z"/></svg>
+        </a>
+        <a class="icon-circle whatsapp" href="https://wa.me/message/XFP7F22GNZX5B1" target="_blank" rel="noopener" aria-label="Message Knowit on WhatsApp">
+          <svg viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.149-.15.298-.347.446-.52.15-.174.198-.3.298-.5.099-.198.05-.371-.05-.52-.099-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.06 3.147 4.995 4.29 2.936 1.142 2.936.762 3.464.71.528-.05 1.706-.698 1.955-1.372.248-.674.248-1.253.173-1.372-.074-.12-.272-.198-.57-.347z"/><path d="M12.004 2c-5.514 0-9.98 4.465-9.98 9.98 0 1.955.564 3.783 1.541 5.32L2 22l4.828-1.523a9.933 9.933 0 0 0 5.176 1.436c5.514 0 9.98-4.465 9.98-9.98C21.984 6.465 17.52 2 12.004 2zm0 18.183a8.16 8.16 0 0 1-4.223-1.174l-.303-.18-2.865.903.912-2.834-.198-.29a8.15 8.15 0 0 1-1.256-4.428c0-4.516 3.673-8.19 8.192-8.19 4.517 0 8.19 3.674 8.19 8.19 0 4.517-3.673 8.003-8.449 8.003z"/></svg>
+        </a>
+      </div>
+      <div class="footer-copy">© 2026 Knowit. All rights reserved.</div>
+    </div>
+  </footer>
+
+</body>
+</html>
